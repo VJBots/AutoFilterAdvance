@@ -53,8 +53,6 @@ Read [this](https://telegram.dog/VJ_Botz) before you start messing up with your 
 * `FILE_STORE_CHANNEL`: Channel from were file store links of posts should be made.Separate multiple IDs by space
 * Check [info.py](https://github.com/VJBots/AutoFilterAdvance/blob/main/info.py) for more
 ## EXTRA FEATURES
-* `URL_SHORTENR_WEBSITE`: URL Shortener Website Link ( Without https://)
-* `URL_SHORTNER_WEBSITE_API`: URL Shortener Website API key
 * `SELF_DELETE`: True if SELF_DELETE is On, False if Off
 * `SELF_DELETE_SECONDS`: Enter Seconds to be SELF_DELETE 
 * `START_TXT`: Enter Your Start Message
