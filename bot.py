@@ -5,14 +5,13 @@ import logging.config
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
-logging.getLogger("cinemagoer").setLevel(logging.ERROR)
+logging.getLogger("imdbpy").setLevel(logging.ERROR)
 
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
-from aiohttp import web
 from database.users_chats_db import db
-from info import SESSION, LOG_CHANNEL, API_ID, API_HASH, BOT_TOKEN, LOG_STR, PORT
+from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR
 from utils import temp
 from typing import Union, Optional, AsyncGenerator
 from pyrogram import types
@@ -25,7 +24,7 @@ class Bot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
-            workers=50,
+            workers=500,
             plugins={"root": "plugins"},
             sleep_threshold=5,
         )
@@ -41,22 +40,12 @@ class Bot(Client):
         temp.U_NAME = me.username
         temp.B_NAME = me.first_name
         self.username = '@' + me.username
-        app = web.AppRunner(await web_server())
-        await app.setup()
-        await web.TCPSite(app, "0.0.0.0", PORT).start()
         logging.info(f"{me.first_name} with for Pyrogram v{__version__} (Layer {layer}) started on {me.username}.")
         logging.info(LOG_STR)
-        await self.send_message(chat_id=LOG_CHANNEL, text=f"<b>{me.mention} Restarted! 🤖</b>")
-        chats = await db.get_all_chats()
-        async for chat in chats:
-            try:
-                await self.send_message(chat_id=chat['id'], text="Bot Restarted! 🤖")
-            except:
-                pass
 
     async def stop(self, *args):
         await super().stop()
-        logging.info("Bot stopped! Bye...")
+        logging.info("Bot stopped. Bye.")
     
     async def iter_messages(
         self,
